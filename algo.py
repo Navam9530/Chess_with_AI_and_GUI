@@ -1,17 +1,19 @@
-# Importing the Necessary Libraries
-import chess as ch
+"""This module acts like a Chess Engine"""
+
 import random as rd
+import chess as ch
 
 class Search:
+    """Evaluates all moves and outputs the best move"""
 
-    # Class Parameters
     def __init__(self, bd, ai_level, human_color):
         self.bd = bd
         self.ai_level = ai_level
         self.human_color = human_color
 
-    # Our pieces should be more on the board
     def get_piece_score(self, box):
+        """Our pieces should be more on the board"""
+
         if self.bd.piece_type_at(box) == ch.PAWN:
             piece_score = 1
         elif self.bd.piece_type_at(box) == ch.KNIGHT:
@@ -29,9 +31,10 @@ class Search:
             return -piece_score
         else:
             return piece_score
-    
-    # We should not get mated but he should
+
     def get_mate_chance(self):
+        """We should not get mated but the opponent should"""
+
         if self.bd.legal_moves.count() == 0:
             if self.bd.turn == self.human_color:
                 return 999
@@ -39,17 +42,19 @@ class Search:
                 return -999
         else:
             return 0
-    
-    # Getting the total weights of each node at the bottom level
+
     def get_total_score(self):
+        """Getting the total weights of each node at the bottom level"""
+
         total_score = 0
         for i in range(64):
             total_score += self.get_piece_score(ch.SQUARES[i])
         total_score += self.get_mate_chance() + rd.random()
         return total_score
-    
-    # Applying Min-Max Algorithm with Alpha-Beta Pruning Optimisation Technique
+
     def min_max(self, candidate, depth):
+        """Applying Min-Max Algorithm with Alpha-Beta Pruning Optimisation Technique"""
+
         if depth == self.ai_level or self.bd.legal_moves.count() == 0:
             return self.get_total_score()
         else:
