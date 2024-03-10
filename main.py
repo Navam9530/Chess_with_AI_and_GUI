@@ -122,7 +122,7 @@ def human_move(fill_boxes, fill_list, possible_moves_indices, previous_box, poss
 def ai_move():
     """Plays the AI move"""
     ai = al.Search(bd, ai_level, human_color)
-    bd.push(ai.min_max(None, 1)) # type: ignore
+    bd.push(ai.min_max(None, 1))
     move_sound.play()
     if bd.is_check():
         check_sound.play()
@@ -131,10 +131,10 @@ def ai_move():
 def announce_results():
     """Displays the result"""
     screen.fill('#000000')
-    if bd.outcome().winner == human_color: # type: ignore
+    if bd.outcome().winner == human_color:
         result = 'YOU WON'
         win_sound.play()
-    elif bd.outcome().winner == None: # type: ignore
+    elif bd.outcome().winner == None:
         result = 'DRAW'
         win_sound.play()
     else:
